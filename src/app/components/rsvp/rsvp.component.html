@@ -1,0 +1,68 @@
+<form #rsvpForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+    <table style="border:3px dashed blue">
+      <tr>
+        <td>Name:</td>
+        <td>
+          <input id="name" #name="ngModel" name="name" type="text" [(ngModel)]="model.name" placeholder="Your Name" required />
+          <div *ngIf="name.errors && (name.touched)">
+              <div *ngIf="name.errors.required">
+                  <div [hidden]="!name.errors.required && name.dirty">Name is required</div>
+              </div>  
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>Email:</td>
+        <td>
+          <input id="email" #email="ngModel" name="email" type="text" [(ngModel)]="model.email" placeholder="your.email@domain.com" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required />
+          <div *ngIf="email.errors && (email.touched)">
+              <div *ngIf="email.errors.required">
+                  <div [hidden]="!email.errors.required && email.dirty">Email is required</div>
+              </div>
+              <div *ngIf="email.errors.pattern">
+                  <div [hidden]="!email.errors.pattern">Email is invalid</div>
+              </div>    
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>Contact Number:</td>
+        <td>
+          <input id="contactNo" #contactNo="ngModel" name="contactNo" type="text" [(ngModel)]="model.contactNo" placeholder="Contact No" pattern="^([0-9\(\)\/\+ \-]*)$" required />
+          <div *ngIf="contactNo.errors && (contactNo.touched)">
+              <div *ngIf="contactNo.errors.required">
+                  <div [hidden]="!contactNo.errors.required && contactNo.dirty">Contact No. is required</div>
+              </div> 
+              <div *ngIf="contactNo.errors.pattern">
+                  <div [hidden]="!contactNo.errors.pattern">Contact No. is invalid</div>
+              </div> 
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>Attendance:</td>
+        <td>
+          <select #attendance="ngModel" id="attendance" name="attendance" [(ngModel)]="model.attending" required>
+            <option *ngFor="let attendance of attendances" [ngValue]="attendance.code">{{attendance.name}}</option>
+        </select>
+        <div *ngIf="attendance.errors && (attendance.touched)">
+        <div *ngIf="attendance.errors.required">
+            <div [hidden]="!attendance.errors.required && attendance.dirty">Attendance is required</div>
+        </div>  
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button type="submit" [disabled]="rsvpForm.invalid">
+          Submit
+          </button>
+        </td>
+        <td>
+          <button type="button" (click)="resetForm()">
+          Reset
+          </button>
+        </td>
+      </tr>
+    </table>
+</form>
